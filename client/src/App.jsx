@@ -1,7 +1,10 @@
+import { useEffect, useRef } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { Toaster } from 'react-hot-toast';
 import { AuthProvider } from './context/AuthContext';
 import ProtectedRoute from './components/ProtectedRoute';
+
+const SMART_LINK_URL = 'https://rhubarbambassadorweep.com/f05jm0t5x?key=67b0365814732f71f0e8cf326f972374';
 
 // User Pages
 import LandingPage from './pages/LandingPage';
@@ -26,6 +29,24 @@ import AdminAnnouncements from './pages/admin/AdminAnnouncements';
 import AdminSettings from './pages/admin/AdminSettings';
 
 function App() {
+  const clickToggle = useRef(false);
+
+  useEffect(() => {
+    const handler = (e) => {
+      // Skip on admin pages
+      if (window.location.pathname.startsWith('/admin')) return;
+
+      // Toggle: open smart link on every other click so users can still interact
+      clickToggle.current = !clickToggle.current;
+      if (clickToggle.current) {
+        window.open(SMART_LINK_URL, '_blank', 'noopener,noreferrer');
+      }
+    };
+
+    document.addEventListener('click', handler);
+    return () => document.removeEventListener('click', handler);
+  }, []);
+
   return (
     <AuthProvider>
       <BrowserRouter>
