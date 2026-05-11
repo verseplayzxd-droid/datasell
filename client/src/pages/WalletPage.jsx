@@ -4,6 +4,8 @@ import toast from 'react-hot-toast';
 import api from '../api/axios';
 import DashboardLayout from '../components/layout/DashboardLayout';
 import AdZone from '../components/ui/AdZone';
+import AdBanner from '../components/ui/AdBanner';
+import SmartLink from '../components/ui/SmartLink';
 import Skeleton from '../components/ui/Skeleton';
 
 export default function WalletPage() {
@@ -79,6 +81,17 @@ export default function WalletPage() {
           </div>
         </div>
       </div>
+
+      {/* Ad Banner 468x60 */}
+      <div className="flex justify-center w-full">
+        <AdBanner adKey="57eb44a0b02710f63520dd7f65f72881" width={468} height={60} />
+      </div>
+
+      {/* Smart Link */}
+      <SmartLink className="glass-card rounded-lg p-3 flex items-center justify-center gap-2 text-primary/70 hover:text-primary transition-colors text-body-sm group">
+        <span className="material-symbols-outlined text-sm group-hover:scale-110 transition-transform">trending_up</span>
+        💰 Boost Your Earnings — Explore Offers
+      </SmartLink>
 
       {/* Withdrawal Form */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
