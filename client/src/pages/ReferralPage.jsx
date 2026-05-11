@@ -3,6 +3,8 @@ import toast from 'react-hot-toast';
 import api from '../api/axios';
 import DashboardLayout from '../components/layout/DashboardLayout';
 import Skeleton from '../components/ui/Skeleton';
+import AdBanner from '../components/ui/AdBanner';
+import SmartLink from '../components/ui/SmartLink';
 
 export default function ReferralPage() {
   const [code, setCode] = useState('');
@@ -91,6 +93,18 @@ export default function ReferralPage() {
           )}
         </div>
       </section>
+
+      {/* Ad Banner 468x60 */}
+      <div className="flex justify-center w-full">
+        <AdBanner adKey="57eb44a0b02710f63520dd7f65f72881" width={468} height={60} />
+      </div>
+
+      {/* Smart Link CTA */}
+      <SmartLink className="glass-card rounded-xl p-4 flex items-center justify-center gap-3 text-primary hover:text-primary-fixed-dim transition-colors group">
+        <span className="material-symbols-outlined group-hover:scale-110 transition-transform">local_offer</span>
+        <span className="text-body-md font-semibold">🔥 Explore Exclusive Earning Offers</span>
+        <span className="material-symbols-outlined text-sm">arrow_forward</span>
+      </SmartLink>
 
       {/* Referral List */}
       {referrals.length > 0 && (

@@ -2,6 +2,9 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import GlowOrbs from '../components/layout/GlowOrbs';
 import Footer from '../components/layout/Footer';
+import AdBanner from '../components/ui/AdBanner';
+import NativeBanner from '../components/ui/NativeBanner';
+import SmartLink from '../components/ui/SmartLink';
 
 const faqs = [
   { q: 'How does DataSell work?', a: 'DataSell connects your unused mobile data to buyers in the decentralized marketplace. You select a package, and we securely route your excess bandwidth through our encrypted nodes.' },
@@ -73,6 +76,11 @@ export default function LandingPage() {
           </div>
         </section>
 
+        {/* Banner Ad 728x90 */}
+        <div className="flex justify-center w-full">
+          <AdBanner adKey="137ac60323a46f587ab9c7d2f5bfe5d2" width={728} height={90} />
+        </div>
+
         {/* How It Works */}
         <section id="how-it-works" className="flex flex-col items-center gap-12">
           <div className="text-center">
@@ -99,6 +107,11 @@ export default function LandingPage() {
           </div>
         </section>
 
+        {/* Banner Ad 468x60 */}
+        <div className="flex justify-center w-full">
+          <AdBanner adKey="57eb44a0b02710f63520dd7f65f72881" width={468} height={60} />
+        </div>
+
         {/* Earnings Calculator */}
         <section className="flex flex-col items-center gap-8">
           <div className="text-center">
@@ -122,7 +135,7 @@ export default function LandingPage() {
               <span className="text-body-lg text-on-surface-variant">Monthly Earnings</span>
               <span className="text-headline-lg text-secondary-container font-bold text-glow-green">₹{sliderValue * 200}</span>
             </div>
-            <Link to="/auth" className="btn-primary w-full py-3 text-headline-sm text-center mt-2">Start Earning Now</Link>
+            <SmartLink className="btn-primary w-full py-3 text-headline-sm text-center mt-2 block">Start Earning Now</SmartLink>
           </div>
         </section>
 
@@ -147,6 +160,11 @@ export default function LandingPage() {
           </div>
         </section>
 
+        {/* Banner Ad 300x250 */}
+        <div className="flex justify-center w-full">
+          <AdBanner adKey="a935041c2501b424b15c5b5b6113ae98" width={300} height={250} />
+        </div>
+
         {/* FAQ */}
         <section className="flex flex-col items-center gap-8 mb-8">
           <h2 className="text-headline-lg text-on-surface font-bold">Frequently Asked Questions</h2>
@@ -167,6 +185,14 @@ export default function LandingPage() {
             ))}
           </div>
         </section>
+
+        {/* Native Banner */}
+        <NativeBanner className="mt-4" />
+
+        {/* Mobile Banner 320x50 */}
+        <div className="flex justify-center md:hidden">
+          <AdBanner adKey="81344be2c74c13c4cc40af361eac118d" width={320} height={50} />
+        </div>
       </main>
 
       <Footer />

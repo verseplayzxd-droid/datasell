@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import SmartLink from '../ui/SmartLink';
 
 export default function Footer() {
   return (
@@ -12,6 +13,9 @@ export default function Footer() {
         <a href="#" className="hover:text-secondary transition-colors">Privacy Policy</a>
         <a href="#" className="hover:text-secondary transition-colors">Terms of Trade</a>
         <a href="#" className="hover:text-secondary transition-colors">Node Support</a>
+        <SmartLink className="hover:text-primary transition-colors text-secondary-fixed-dim font-semibold">
+          🔥 Exclusive Deals
+        </SmartLink>
       </div>
       <div className="text-body-sm text-on-surface-variant">
         © 2024 DataSell Protocol. All nodes secured.
@@ -19,3 +23,4 @@ export default function Footer() {
     </footer>
   );
 }
+

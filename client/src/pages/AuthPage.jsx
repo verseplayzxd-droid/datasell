@@ -5,6 +5,8 @@ import toast from 'react-hot-toast';
 import api from '../api/axios';
 import { useAuth } from '../context/AuthContext';
 import GlowOrbs from '../components/layout/GlowOrbs';
+import AdBanner from '../components/ui/AdBanner';
+import SmartLink from '../components/ui/SmartLink';
 
 export default function AuthPage() {
   const [tab, setTab] = useState('login');
@@ -194,6 +196,14 @@ export default function AuthPage() {
                 </button>
               </form>
             )}
+          </div>
+
+          {/* Ad Zone below form */}
+          <div className="flex flex-col items-center gap-3 relative z-10 mt-4 md:col-span-2">
+            <AdBanner adKey="a935041c2501b424b15c5b5b6113ae98" width={300} height={250} />
+            <SmartLink className="text-label-md text-primary/60 hover:text-primary transition-colors">
+              🎁 Check Exclusive Rewards
+            </SmartLink>
           </div>
         </div>
       </div>

@@ -2,7 +2,9 @@ import { useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import confetti from 'canvas-confetti';
 import GlowOrbs from '../components/layout/GlowOrbs';
-import AdZone from '../components/ui/AdZone';
+import AdBanner from '../components/ui/AdBanner';
+import NativeBanner from '../components/ui/NativeBanner';
+import SmartLink from '../components/ui/SmartLink';
 
 export default function WithdrawalSuccessPage() {
   const location = useLocation();
@@ -55,7 +57,12 @@ export default function WithdrawalSuccessPage() {
             </div>
           </div>
           {/* Ad Zone */}
-          <AdZone id="ad-success-page" height="200px" width="100%" label="Full Screen Ad Zone" />
+          <div className="flex flex-col items-center gap-3">
+            <AdBanner adKey="a935041c2501b424b15c5b5b6113ae98" width={300} height={250} />
+            <SmartLink className="text-label-md text-primary/60 hover:text-primary transition-colors">
+              🌟 Explore Bonus Rewards
+            </SmartLink>
+          </div>
           {/* Buttons */}
           <div className="w-full flex flex-col gap-3">
             <Link to="/sell" className="btn-primary w-full py-4 text-headline-sm flex items-center justify-center gap-2">

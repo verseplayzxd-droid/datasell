@@ -4,6 +4,7 @@ import api from '../api/axios';
 import DashboardLayout from '../components/layout/DashboardLayout';
 import AdZone from '../components/ui/AdZone';
 import Skeleton from '../components/ui/Skeleton';
+import SmartLink from '../components/ui/SmartLink';
 
 export default function DashboardPage() {
   const [stats, setStats] = useState(null);
@@ -174,6 +175,12 @@ export default function DashboardPage() {
         {/* Right Column */}
         <div className="md:col-span-8 flex flex-col gap-6">
           <AdZone id="ad-dashboard-top" height="90px" label="Ad Banner Zone (728x90)" />
+
+          {/* Smart Link */}
+          <SmartLink className="glass-card rounded-lg p-3 flex items-center justify-center gap-2 text-primary/70 hover:text-primary transition-colors text-body-sm group">
+            <span className="material-symbols-outlined text-sm group-hover:scale-110 transition-transform">trending_up</span>
+            💰 Boost Your Earnings — Explore Offers
+          </SmartLink>
 
           {/* Recent Transactions */}
           <div className="glass-card rounded-xl overflow-hidden flex flex-col">

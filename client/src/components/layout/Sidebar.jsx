@@ -1,5 +1,7 @@
 import { Link, useLocation } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
+import AdBanner from '../ui/AdBanner';
+import SmartLink from '../ui/SmartLink';
 
 const navItems = [
   { path: '/dashboard', icon: 'grid_view', label: 'Dashboard' },
@@ -53,6 +55,14 @@ export default function Sidebar() {
           );
         })}
       </nav>
+
+      {/* Sidebar Ad */}
+      <div className="px-4 pb-2 flex flex-col items-center gap-2">
+        <AdBanner adKey="03636bb437a6a159c1ce8ee22e29393d" width={160} height={300} />
+        <SmartLink className="text-label-md text-primary/70 hover:text-primary transition-colors text-center block py-1">
+          💰 Explore Offers
+        </SmartLink>
+      </div>
     </aside>
   );
 }

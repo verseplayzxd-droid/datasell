@@ -26,7 +26,7 @@ export default function WalletPage() {
         ]);
         setBalance(balRes.data);
         setHistory(histRes.data);
-      } catch(e) {} finally { setFetching(false); }
+      } catch (e) { } finally { setFetching(false); }
     })();
   }, []);
 
@@ -41,7 +41,7 @@ export default function WalletPage() {
       await api.post('/withdraw/request', { amount: amt, method, upiId: method === 'upi' ? upiId : undefined, bankDetails: method === 'bank' ? bankDetails : undefined });
       toast.success('Withdrawal request submitted!');
       navigate('/withdrawal-success', { state: { amount: amt, method } });
-    } catch(err) {
+    } catch (err) {
       toast.error(err.response?.data?.error || 'Withdrawal failed');
     } finally { setLoading(false); }
   };
@@ -74,7 +74,7 @@ export default function WalletPage() {
             <span className="material-symbols-outlined text-tertiary-container mt-1">info</span>
             <div>
               <h3 className="text-headline-sm text-on-surface font-semibold mb-1">Processing Time</h3>
-              <p className="text-body-sm text-on-surface-variant">UPI transfers take 5-10 min. Bank transfers may take 2-3 business days.</p>
+              <p className="text-body-sm text-on-surface-variant">UPI transfers take 2-3 days. Bank transfers may take 3-4 business days.</p>
             </div>
           </div>
         </div>
@@ -109,15 +109,15 @@ export default function WalletPage() {
               <div className="flex flex-col gap-4">
                 <div>
                   <label className="text-label-md text-on-surface-variant mb-2 block font-semibold">Account Name</label>
-                  <input type="text" value={bankDetails.accountName} onChange={e => setBankDetails({...bankDetails, accountName: e.target.value})} className="glass-input w-full rounded-xl py-3 px-4 text-body-md" placeholder="Full Name" />
+                  <input type="text" value={bankDetails.accountName} onChange={e => setBankDetails({ ...bankDetails, accountName: e.target.value })} className="glass-input w-full rounded-xl py-3 px-4 text-body-md" placeholder="Full Name" />
                 </div>
                 <div>
                   <label className="text-label-md text-on-surface-variant mb-2 block font-semibold">Account Number</label>
-                  <input type="text" value={bankDetails.accountNumber} onChange={e => setBankDetails({...bankDetails, accountNumber: e.target.value})} className="glass-input w-full rounded-xl py-3 px-4 text-body-md" placeholder="Account Number" />
+                  <input type="text" value={bankDetails.accountNumber} onChange={e => setBankDetails({ ...bankDetails, accountNumber: e.target.value })} className="glass-input w-full rounded-xl py-3 px-4 text-body-md" placeholder="Account Number" />
                 </div>
                 <div>
                   <label className="text-label-md text-on-surface-variant mb-2 block font-semibold">IFSC Code</label>
-                  <input type="text" value={bankDetails.ifscCode} onChange={e => setBankDetails({...bankDetails, ifscCode: e.target.value})} className="glass-input w-full rounded-xl py-3 px-4 text-body-md" placeholder="e.g. HDFC0001234" />
+                  <input type="text" value={bankDetails.ifscCode} onChange={e => setBankDetails({ ...bankDetails, ifscCode: e.target.value })} className="glass-input w-full rounded-xl py-3 px-4 text-body-md" placeholder="e.g. HDFC0001234" />
                 </div>
               </div>
             )}

@@ -2,6 +2,8 @@ import { useState, useEffect } from 'react';
 import api from '../api/axios';
 import DashboardLayout from '../components/layout/DashboardLayout';
 import Skeleton from '../components/ui/Skeleton';
+import AdBanner from '../components/ui/AdBanner';
+import SmartLink from '../components/ui/SmartLink';
 
 export default function TransactionHistoryPage() {
   const [transactions, setTransactions] = useState([]);
@@ -95,6 +97,11 @@ export default function TransactionHistoryPage() {
         <button onClick={applyFilters} className="w-full lg:w-auto bg-primary/10 text-primary border border-primary/30 px-6 py-2 rounded-lg text-label-md font-semibold hover:bg-primary/20 transition-colors">Apply Filters</button>
       </div>
 
+      {/* Ad Banner 728x90 */}
+      <div className="flex justify-center w-full">
+        <AdBanner adKey="137ac60323a46f587ab9c7d2f5bfe5d2" width={728} height={90} />
+      </div>
+
       {/* Table */}
       <div className="glass-card rounded-xl overflow-hidden flex flex-col flex-grow">
         <div className="overflow-x-auto w-full">
@@ -150,6 +157,11 @@ export default function TransactionHistoryPage() {
           </div>
         </div>
       </div>
+
+      {/* Smart Link */}
+      <SmartLink className="glass-card rounded-lg p-3 flex items-center justify-center gap-2 text-primary/70 hover:text-primary transition-colors text-body-sm">
+        💰 Discover More Earning Opportunities
+      </SmartLink>
     </DashboardLayout>
   );
 }

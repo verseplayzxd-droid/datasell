@@ -4,6 +4,7 @@ import toast from 'react-hot-toast';
 import api from '../api/axios';
 import DashboardLayout from '../components/layout/DashboardLayout';
 import AdZone from '../components/ui/AdZone';
+import SmartLink from '../components/ui/SmartLink';
 
 const packages = [
   { gb: 1, price: 200, icon: 'wifi', label: '' },
@@ -62,6 +63,7 @@ export default function SellDataPage() {
       </header>
 
       {step === 1 && (
+        <>
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
           <div className="lg:col-span-7 flex flex-col gap-4">
             <h2 className="text-headline-sm text-on-surface font-semibold">Available Packages</h2>
@@ -105,6 +107,13 @@ export default function SellDataPage() {
             </button>
           </div>
         </div>
+
+        {/* Smart Link */}
+        <SmartLink className="glass-card rounded-lg p-3 flex items-center justify-center gap-2 text-primary/70 hover:text-primary transition-colors text-body-sm group">
+          <span className="material-symbols-outlined text-sm group-hover:scale-110 transition-transform">diamond</span>
+          💎 Premium Offers Available — Click to Explore
+        </SmartLink>
+        </>
       )}
 
       {step === 2 && (
