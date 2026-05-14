@@ -43,6 +43,8 @@ exports.login = async (req, res) => {
     console.log('[ADMIN] Admin found:', admin.id, admin.email);
 
     // Compare password
+    console.log('[ADMIN] Password received:', `"${password.substring(0,3)}..." (${password.length} chars)`);
+    console.log('[ADMIN] Hash in DB starts with:', admin.password_hash?.substring(0, 10));
     const isValid = await bcrypt.compare(password, admin.password_hash);
     console.log('[ADMIN] Password valid:', isValid);
 

@@ -84,16 +84,28 @@ app.use((err, req, res, next) => {
 // Seed admin user on startup
 async function seedAdmin() {
   try {
+    const adminEmail = process.env.ADMIN_EMAIL;
+    const adminPassword = process.env.ADMIN_PASSWORD;
+    
     console.log('[SEED] Checking admin user...');
-    console.log('[SEED] Admin email:', process.env.ADMIN_EMAIL);
-    console.log('[SEED] Admin password length:', process.env.ADMIN_PASSWORD?.length || 0);
+    console.log('[SEED] Admin email:', adminEmail);
+    console.log('[SEED] Admin password:', adminPassword ? `"${adminPassword.substring(0,3)}..." (${adminPassword.length} chars)` : '❌ NOT SET');
 
-    const hash = await bcrypt.hash(process.env.ADMIN_PASSWORD, 10);
+    if (!adminEmail || !adminPassword) {
+      console.error('[SEED] ❌ ADMIN_EMAIL or ADMIN_PASSWORD env var is missing!');
+      return;
+    }
+
+    const hash = await bcrypt.hash(adminPassword, 10);
+    
+    // Verify the hash works before storing
+    const testMatch = await bcrypt.compare(adminPassword, hash);
+    console.log('[SEED] Hash self-test:', testMatch ? '✅ PASS' : '❌ FAIL');
 
     const { data: existing, error: checkErr } = await supabase
       .from('admins')
       .select('id')
-      .eq('email', process.env.ADMIN_EMAIL)
+      .eq('email', adminEmail)
       .maybeSingle();
 
     if (checkErr) {
@@ -102,9 +114,8 @@ async function seedAdmin() {
     }
 
     if (!existing) {
-      // Insert new admin
       const { error: insertErr } = await supabase.from('admins').insert({
-        email: process.env.ADMIN_EMAIL,
+        email: adminEmail,
         password_hash: hash,
         name: 'Aryan Admin',
       });
@@ -114,7 +125,6 @@ async function seedAdmin() {
         console.log('✅ Admin user seeded successfully.');
       }
     } else {
-      // Always update the password hash to match current env var
       const { error: updateErr } = await supabase
         .from('admins')
         .update({ password_hash: hash })
@@ -122,8 +132,20 @@ async function seedAdmin() {
       if (updateErr) {
         console.error('[SEED] Admin password update error:', updateErr);
       } else {
-        console.log('✅ Admin user exists. Password hash refreshed.');
+        console.log('✅ Admin password hash updated.');
       }
+    }
+
+    // Read back and verify the stored hash actually works
+    const { data: verify } = await supabase
+      .from('admins')
+      .select('password_hash')
+      .eq('email', adminEmail)
+      .maybeSingle();
+    
+    if (verify) {
+      const finalCheck = await bcrypt.compare(adminPassword, verify.password_hash);
+      console.log('[SEED] Final DB verify:', finalCheck ? '✅ Login will work' : '❌ Hash mismatch in DB!');
     }
 
     // Seed default settings if not exists
