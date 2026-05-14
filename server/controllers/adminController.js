@@ -17,22 +17,55 @@ async function logAction(adminId, actionType, targetUserId, amount, note) {
 exports.login = async (req, res) => {
   try {
     const { email, password } = req.body;
-    if (!email || !password) return res.status(400).json({ error: 'Email and password required.' });
+    console.log('[ADMIN] Login attempt for:', email);
 
-    const { data: admins } = await supabase.from('admins').select('*').eq('email', email).limit(1);
-    if (!admins || admins.length === 0) return res.status(401).json({ error: 'Invalid admin credentials.' });
+    if (!email || !password) {
+      return res.status(400).json({ error: 'Email and password required.' });
+    }
 
-    const admin = admins[0];
+    // Find admin by email
+    const { data: admin, error: findErr } = await supabase
+      .from('admins')
+      .select('*')
+      .eq('email', email)
+      .maybeSingle();
+
+    if (findErr) {
+      console.error('[ADMIN] DB lookup error:', findErr);
+      return res.status(500).json({ error: 'Server error looking up admin.' });
+    }
+
+    if (!admin) {
+      console.log('[ADMIN] No admin found with email:', email);
+      return res.status(401).json({ error: 'Invalid admin credentials.' });
+    }
+
+    console.log('[ADMIN] Admin found:', admin.id, admin.email);
+
+    // Compare password
     const isValid = await bcrypt.compare(password, admin.password_hash);
-    if (!isValid) return res.status(401).json({ error: 'Invalid admin credentials.' });
+    console.log('[ADMIN] Password valid:', isValid);
 
+    if (!isValid) {
+      return res.status(401).json({ error: 'Invalid admin credentials.' });
+    }
+
+    // Update last login
     await supabase.from('admins').update({ last_login: new Date().toISOString() }).eq('id', admin.id);
 
-    const token = jwt.sign({ adminId: admin.id, role: 'admin' }, process.env.ADMIN_JWT_SECRET, { expiresIn: '24h' });
-    res.json({ message: 'Admin login successful', token, admin: { id: admin.id, name: admin.name, email: admin.email } });
+    // Sign JWT
+    const secret = process.env.ADMIN_JWT_SECRET || process.env.JWT_SECRET;
+    const token = jwt.sign({ adminId: admin.id, role: 'admin' }, secret, { expiresIn: '24h' });
+
+    console.log('[ADMIN] Login success for:', admin.email);
+    res.json({
+      message: 'Admin login successful',
+      token,
+      admin: { id: admin.id, name: admin.name, email: admin.email },
+    });
   } catch (err) {
-    console.error('Admin login error:', err);
-    res.status(500).json({ error: 'Server error.' });
+    console.error('[ADMIN] Login fatal error:', err);
+    res.status(500).json({ error: 'Server error during admin login.' });
   }
 };
 

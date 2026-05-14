@@ -7,7 +7,8 @@ const adminAuth = (req, res, next) => {
   }
   try {
     const token = authHeader.split(' ')[1];
-    const decoded = jwt.verify(token, process.env.ADMIN_JWT_SECRET);
+    const secret = process.env.ADMIN_JWT_SECRET || process.env.JWT_SECRET;
+    const decoded = jwt.verify(token, secret);
     if (decoded.role !== 'admin') {
       return res.status(403).json({ error: 'Forbidden. Admin access required.' });
     }
